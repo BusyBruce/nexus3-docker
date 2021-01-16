@@ -1,4 +1,4 @@
-name: Deploy Release Build
+name: Deploy Release Automated Build
 
 # Trigger on release
 on:
@@ -50,7 +50,7 @@ jobs:
             --cache-to type=local,dest=/tmp/buildx-cache \
             --label org.opencontainers.image.revision="${{github.sha}}" \
             --platform "linux/arm/v7,linux/arm64" \
-            --tag "${{secrets.REGISTRY_USERNAME}}/nexus3:${GITHUB_REF#refs/tags/}" \
+            --tag "${{secrets.REGISTRY_USERNAME}}/nexus3:${{github.event.client_payload.release_version}}" \
             --output "type=image,push=true" \
             --build-arg NEXUS_VERSION=${{github.event.client_payload.release_version}} \
             --file ./Dockerfile .
