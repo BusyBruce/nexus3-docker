@@ -9,6 +9,9 @@ on:
       release_version:
         description: "release nexus version"
         required: true
+      main_version:
+        description: "release nexus main version"
+        required: true
 
 jobs:
   build_deploy_to_registry:
@@ -56,6 +59,7 @@ jobs:
             --file ./Dockerfile .
 
       - name: Build + Push image ("latest")
+        if: github.event.client_payload.main_version = '3'
         run: |
           docker buildx build \
             --cache-from type=local,src=/tmp/buildx-cache \
