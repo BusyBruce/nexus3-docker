@@ -59,7 +59,7 @@ jobs:
             --file ./Dockerfile .
 
       - name: Build + Push image ("latest")
-        if: github.event.client_payload.main_version = '3'
+        if: github.event.client_payload.main_version == '3'
         run: |
           docker buildx build \
             --cache-from type=local,src=/tmp/buildx-cache \
